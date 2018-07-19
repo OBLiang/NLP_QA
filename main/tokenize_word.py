@@ -2,7 +2,7 @@ import jieba
 import jieba.posseg as pseg
 
 
-def tokenize(fin_, fout_):
+def tokenize_word(fin_, fout_):
     passage = fin_.read().strip().split('\n')
     i = 1
     for line in passage:
