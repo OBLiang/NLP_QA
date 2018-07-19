@@ -3,8 +3,7 @@ import jieba.posseg as pseg
 
 
 def tokenize(fin_, fout_):
-    passage = fin_.read().split('\n')
-    del (passage[-1])
+    passage = fin_.read().strip().split('\n')
     i = 1
     for line in passage:
         print(i)
@@ -21,8 +20,7 @@ def tokenize(fin_, fout_):
 
 def remove_stop_word(fin_, fout_):
     left = ['x', 'zg', 'uj', 'ul', 'e', 'd', 'uz', 'y']
-    passage = fin_.read().split('\n')
-    del (passage[-1])
+    passage = fin_.read().strip().split('\n')
     i = 1
     for line in passage:
         print(i)
@@ -43,3 +41,27 @@ def remove_stop_word(fin_, fout_):
         su.append(' '.join(res))
         su.append(msg[2])
         fout_.write('\t'.join(su)+'\n')
+
+
+def remove_stop_word_and_ans(fin_, fout_):
+    left = ['x', 'zg', 'uj', 'ul', 'e', 'd', 'uz', 'y']
+    passage = fin_.read().strip().split('\n')
+    i = 1
+    for line in passage:
+        print(i)
+        i += 1
+        msg = line.split('\t')
+        res = []
+        su = []
+        content = pseg.cut(msg[0])
+        for word, flag in content:
+            if flag not in left:
+                res.append(word)
+        su.append(' '.join(res))
+        res = []
+        content = pseg.cut(msg[1])
+        for word, flag in content:
+            if flag not in left:
+                res.append(word)
+        su.append(' '.join(res))
+        fout_.write('\t'.join(su) + '\n')
